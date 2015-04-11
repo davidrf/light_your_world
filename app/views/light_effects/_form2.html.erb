@@ -1,0 +1,53 @@
+<fieldset>
+  <legend>New Light Effect</legend>
+  <div class="row">
+    <div class="column">
+      <%= form_for @light_effect do |f| %>
+        <% if @light_effect.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@light_effect.errors.count, "error") %> prohibited this light_effect from being saved:</h2>
+            <ul>
+            <% @light_effect.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, id: "light-effect-name" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :hue %><br>
+          <%= f.range_field :hue, value: 65535, in: 0..65535, step: 1,  class: "new-light-effect", id: "hue" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :brightness %><br>
+          <%= f.range_field :brightness, value: 254, in: 1..254, step: 1, class: "new-light-effect", id: "brightness" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :saturation %><br>
+          <%= f.range_field :saturation, value: 254, in: 0..254, step: 1, class: "new-light-effect", id: "saturation" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :transition_time %><br>
+          <%= f.range_field :transition_time, value: 0, in: 0..100, step: 1, class: "new-light-effect", id: "transition-time" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :on %><br>
+          <%= f.check_box :on, id: "power-on" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Add Light Effect", class: "button", id: "add-edit-button" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</fieldset>

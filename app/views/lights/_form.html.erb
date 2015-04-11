@@ -1,0 +1,41 @@
+<%= form_for @light_effect do |f| %>
+  <% if @light_effect.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@light_effect.errors.count, "error") %> prohibited this light_effect from being saved:</h2>
+      <ul>
+      <% @light_effect.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :hue %><br>
+    <%= f.range_field :hue, nil, in: 0..65535 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :hue %><br>
+    <%= f.range_field :hue, in: 0..65535, step: 1 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :saturation %><br>
+    <%= f.range_field :saturation, in: 0..254, step: 1 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :brightness %><br>
+    <%= f.range_field :brightness, in: 1..254, step: 1 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :on %><br>
+    <%= f.check_box :on %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Add Light" %>
+  </div>
+<% end %>

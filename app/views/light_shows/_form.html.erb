@@ -1,0 +1,24 @@
+<fieldset>
+  <legend>New Light Show</legend>
+    <%= form_for @light_show do |f| %>
+      <% if @light_show.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@light_show.errors.count, "error") %> prohibited this light_show from being saved:</h2>
+          <ul>
+          <% @light_show.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, id: "light-show-name" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Add Light Show", class: "button" %>
+      </div>
+    <% end %>
+</fieldset>

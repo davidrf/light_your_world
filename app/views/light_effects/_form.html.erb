@@ -1,0 +1,46 @@
+<%= form_for @light_effect do |f| %>
+  <% if @light_effect.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@light_effect.errors.count, "error") %> prohibited this light_effect from being saved:</h2>
+      <ul>
+      <% @light_effect.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :hue %><br>
+    <%= f.number_field :hue, in: 0..65535, step: 1,  class: "new_light_effect", id: "hue" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :brightness %><br>
+    <%= f.number_field :brightness, in: 1..254, step: 1, class: "new_light_effect", id: "brightness" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :saturation %><br>
+    <%= f.number_field :saturation,in: 0..254, step: 1, class: "new_light_effect", id: "saturation" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :transition_time %><br>
+    <%= f.number_field :transition_time, in: 0..254, step: 1, class: "new_light_effect", id: "transition_time" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :on %><br>
+    <%= f.check_box :on, id: "power_on" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Add Light" %>
+  </div>
+<% end %>

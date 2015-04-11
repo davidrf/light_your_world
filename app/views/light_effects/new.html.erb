@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="small-6 columns">
+    <%= render 'form2' %>
+  </div>
+  <div class="small-6 columns">
+    <% if LightEffect.exists? %>
+    <fieldset>
+      <legend>Your Saved Light Effects</legend>
+      <%= select_tag(nil, options_for_select(@light_effect_dropdown), size: "2", id: "user-light-effects") %>
+      <%= link_to 'Delete Light Effect', nil, class: "button", id: "delete-light-effect"  %>
+    </fieldset>
+    <% end %>
+  </div>
+</div>

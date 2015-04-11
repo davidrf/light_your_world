@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="column">
+    <%= render 'form' %>
+    <% if LightShow.exists? %>
+      <%= select_tag(nil, options_for_select(@light_show_dropdown), size: "2", id: "user-light-shows") %>
+      <%= link_to 'Delete Light Show', nil, class: "button", id: "delete-light-show"  %>
+    <% end %>
+  </div>
+</div>
