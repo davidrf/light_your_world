@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411212030) do
+ActiveRecord::Schema.define(version: 20150411224117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(version: 20150411212030) do
 
   add_index "light_effects", ["name"], name: "index_light_effects_on_name", using: :btree
   add_index "light_effects", ["user_id"], name: "index_light_effects_on_user_id", using: :btree
+
+  create_table "light_sequences", force: :cascade do |t|
+    t.integer "milliseconds",    null: false
+    t.integer "light_id",        null: false
+    t.integer "light_effect_id", null: false
+    t.integer "light_show_id",   null: false
+  end
 
   create_table "light_shows", force: :cascade do |t|
     t.string  "name",    null: false

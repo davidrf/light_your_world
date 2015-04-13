@@ -5,7 +5,8 @@
  */
 
 // url global variable
-var url = "10.10.11.132";
+// var url = "10.10.11.132";
+var url = "192.168.0.12";
 var light_effect_list = [];
 
 // this will be called when the DOM is ready
@@ -80,8 +81,8 @@ function edit_light_effect(){
     url: "/light_effects/" + light_effect_id,
     data: { light_effect: {
       name: name,
-      hue: hue, brightness:
-      brightness,
+      hue: hue,
+      brightness: brightness,
       saturation: saturation,
       transition_time: transition_time,
       on: on
@@ -155,6 +156,7 @@ function show_light_effect(light_effect_id){
 
           // change lights to selected effect
           var settings = '{"hue":' + hue + ',"bri":' + brightness + ',"sat":' + saturation +',"transitiontime":' + transition_time + ',"on":true}'
+          console.log(settings);
           $.ajax({
             method:"PUT",
             url:"http://" + url + "/api/newdeveloper/groups/0/action",
@@ -197,16 +199,19 @@ function changecolor()
     if (isNaN(sat) || sat == "" || sat < 0 || sat > 254)
         sat = 254;
 
-    transtime = $('#transition_time').val();
-    if (isNaN(transtime) || transtime == "" || transtime < 0 || transtime > 100)
-        transtime = 4;
+    transition_time = $('#transition-time').val();
+    console.log(transition_time);
+    if (isNaN(transition_time) || transition_time == "" || transition_time < 0 || transition_time > 100)
+        transition_time = 4;
 
     // change colors of bulbs via AJAX call
+    var settings = '{"hue":' + hue + ',"bri":' + brightness + ',"sat":' + saturation +',"transitiontime":' + transition_time + ',"on":true}'
+    console.log(settings);
     $.ajax({
         method:"PUT",
         url:"http://" + url + "/api/newdeveloper/groups/0/action",
         data:'{"hue":' + hue + ', "bri":' + bri + ', "sat":' + sat
-             +', "transitiontime":' + transtime + '}',
+             +', "transitiontime":' + transition_time + '}',
     })
 };
 
