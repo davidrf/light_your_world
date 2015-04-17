@@ -1,15 +1,70 @@
 <div class="row">
-  <div class="small-6 columns">
-    <%= render 'form' %>
-    <% if LightShow.exists? %>
-      <%= select_tag(nil, options_for_select(@light_show_dropdown), size: "2", id: "user-light-shows") %>
-      <%= link_to 'Play Light Show', nil, class: "button", id: "play-light-show"  %>
-      <%= link_to 'Delete Light Show', nil, class: "button", id: "delete-light-show"  %>
-    <% end %>
-  </div>
-  <div class="small-6 columns">
-    <% if LightShow.exists? %>
-      <%= render '/light_sequences/form' %>
-    <% end %>
+  <div class="column">
+    <fieldset>
+      <legend>Create Light Shows</legend>
+        <% if current_user.light_shows.exists? %>
+        <div class="row">
+          <div class="small-3 columns">
+            <%= select_tag(nil, options_for_select(@light_show_dropdown), id: "user_light_shows") %>
+          </div>
+          <div class="small-3 columns">
+            <ul class="button-group round even-2">
+              <li><%= link_to 'Play Light Show', nil, class: "tiny button", id: "play-light-show"  %></li>
+              <li><%= link_to 'Delete Light Show', nil, class: "tiny button", id: "delete-light-show"  %></li>
+            </ul>
+          </div>
+          <div class="small-6 columns">
+            <%= render 'form' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <%= render '/light_sequences/form' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scheduled Time</th>
+                  <th>Light Effect</th>
+                  <th>Light Number</th>
+                  <th>Transition Time</th>
+                  <th id="power">Power</th>
+                  <th id="editdelete" colspan="1"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @light_sequences.each do |light_sequence| %>
+                  <tr class="light_sequence_row" id="light_sequence_<%= light_sequence.id %>">
+                    <td id="scheduled_time_<%= light_sequence.id %>"><%= light_sequence.scheduled_time %></td>
+                    <td id="light_effect_<%= light_sequence.id %>"><%= light_sequence.light_effect.name %></td>
+                    <td id="light_id_<%= light_sequence.id %>"><%= light_sequence.light_id %></td>
+                    <td id="transition_time_<%= light_sequence.id %>"><%= light_sequence.transition_time %></td>
+                    <td id="power_<%= light_sequence.id %>"><%= light_sequence.power %></td>
+                    <td>
+                      <div class="small-6 column text-center">
+                        <%= link_to 'Edit', light_sequence_path(light_sequence), class: "edit_light_show" %>
+                      </div>
+                      <div class="small-6 column text-center">
+                        <%= link_to 'Delete', light_sequence_path(light_sequence), class: "delete_light_show" %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% else %>
+        <div class="row">
+          <div class="column">
+            <%= render 'form' %>
+          </div>
+        </div>
+      <% end %>
+    </fieldset>
   </div>
 </div>

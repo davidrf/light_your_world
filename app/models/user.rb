@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :light_effects
+  has_many :light_shows
 
   validates :bridge_url, presence: true
 end

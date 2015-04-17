@@ -105,7 +105,10 @@ function get_light_effect_list() {
   $.getJSON("/light_effects")
     .done(function(data, textStatus, jqXHR) {
       for (var i = 0; i < data.length; i++) {
-        light_effect_list.push(data[i].name);
+        var light_effect_name = data[i].name;
+        var light_effect_id = data[i].id;
+        light_effect_hash[light_effect_id] = light_effect_name;
+        light_effect_list.push(light_effect_name);
       }
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
@@ -156,7 +159,6 @@ function show_light_effect(light_effect_id){
 
           // change lights to selected effect
           var settings = '{"hue":' + hue + ',"bri":' + brightness + ',"sat":' + saturation +',"transitiontime":' + transition_time + ',"on":true}'
-          console.log(settings);
           $.ajax({
             method:"PUT",
             url:"http://" + url + "/api/newdeveloper/groups/0/action",
@@ -200,13 +202,11 @@ function changecolor()
         sat = 254;
 
     transition_time = $('#transition-time').val();
-    console.log(transition_time);
     if (isNaN(transition_time) || transition_time == "" || transition_time < 0 || transition_time > 100)
         transition_time = 4;
 
     // change colors of bulbs via AJAX call
     var settings = '{"hue":' + hue + ',"bri":' + brightness + ',"sat":' + saturation +',"transitiontime":' + transition_time + ',"on":true}'
-    console.log(settings);
     $.ajax({
         method:"PUT",
         url:"http://" + url + "/api/newdeveloper/groups/0/action",
@@ -222,7 +222,7 @@ function toggle_power(){
     var on = $('#power-on').is(':checked');
 
     // turn on light if checked
-    if(on) {
+    if (on) {
         $.ajax({
             method:"PUT",
             url:"http://" + url + "/api/newdeveloper/groups/0/action",

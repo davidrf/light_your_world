@@ -1,0 +1,38 @@
+<%= form_for [@light_show_first, @light_sequence] do |f| %>
+  <% if @light_sequence.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@light_sequence.errors.count, "error") %> prohibited this light_sequence from being saved:</h2>
+      <ul>
+      <% @light_sequence.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="small-2 columns">
+      <%= f.label :scheduled_time, "Scheduled Time" %>
+      <%= f.number_field :scheduled_time, value: 0 %>
+    </div>
+    <div class="small-2 columns">
+      <%= f.label :light_effect_id, "Light Effect" %>
+      <%= f.select :light_effect_id, @light_effects_dropdown, class: "new-light-sequence" %>
+    </div>
+    <div class="small-2 columns">
+      <%= f.label :light_id, "Light Number" %>
+      <%= f.select :light_id, @lights_dropdown, class: "new-light-sequence" %>
+    </div>
+    <div class="small-2 columns">
+      <%= f.label :transition_time, "Transition Time" %>
+      <%= f.number_field :transition_time, value: 0, in: 0..100, step: 1 %>
+    </div>
+    <div class="small-1 columns">
+      <%= f.label :on, "Power" %>
+      <%= f.check_box :on, class: "new-light-sequence", checked: true %>
+    </div>
+    <div class="small-3 columns">
+      <%= f.submit "Add Light Sequence", id: "add-light-show",class: "tiny button round expand" %>
+    </div>
+  </div>
+<% end %>

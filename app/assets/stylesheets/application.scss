@@ -18,3 +18,17 @@
 select#user-light-effects {
   height: 31.2em;
 }
+
+th {
+  width: 11em;
+  &#power {
+    width: 5.5em;
+  }
+  &#editdelete {
+    width: 16.5em;
+  }
+}
+
+#add-light-show {
+  margin-top: 1.5em;
+}

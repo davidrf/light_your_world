@@ -1,5 +1,7 @@
 class LightEffect < ActiveRecord::Base
   belongs_to :user
+  has_many :light_sequences
+  has_many :light_shows, through: :light_sequences
 
   validates :name, presence: true
   validates :hue, numericality: {
