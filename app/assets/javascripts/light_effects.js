@@ -79,14 +79,16 @@ function edit_light_effect(){
   $.ajax({
     method: "PUT",
     url: "/light_effects/" + light_effect_id,
-    data: { light_effect: {
-      name: name,
-      hue: hue,
-      brightness: brightness,
-      saturation: saturation,
-      transition_time: transition_time,
-      on: on
-    } }
+    data: {
+      light_effect: {
+        name: name,
+        hue: hue,
+        brightness: brightness,
+        saturation: saturation,
+        transition_time: transition_time,
+        on: on
+      }
+    }
   })
 };
 

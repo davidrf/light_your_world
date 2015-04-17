@@ -19,6 +19,19 @@ class LightSequencesController < ApplicationController
     redirect_to new_light_show_url
   end
 
+  def update
+    @light_sequence = LightSequence.find(params[:id])
+    if @light_sequence.update(light_sequence_params)
+      respond_to do |format|
+        format.json { render json: @light_sequence }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: { errors: @light_sequence.errors.full_messages }, status: 400 }
+      end
+    end
+  end
+
   def destroy
     @light_sequence = LightSequence.find(params[:id])
     @light_sequence.destroy
