@@ -7,13 +7,20 @@
 // url global variable
 // var url = "10.10.11.132";
 var url = "192.168.0.12";
-var light_sequence_list = [];
+var light_sequences = [];
 var light_effect_hash = {};
+var light_effect_setting = {};
+var light_power_status = {
+  1: false,
+  2: false,
+  3: false
+};
 
 // this will be called when the DOM is ready
 $(function() {
   //get light effect list
   get_light_effect_list();
+  updateLightSequences($('#user_light_shows option:selected').val());
 
   $('.new_light_sequence').change(function() {
     updateOneBulb();
@@ -23,16 +30,71 @@ $(function() {
     updateLightSequences(this.value);
   });
 
-  $('.delete_light_show').click(function(event) {
+  $(document.body).on('click', '.delete_light_show', function(event) {
     event.preventDefault();
     deleteLightSequence(this);
   });
 
-  $(document.body).on('click', '.edit_light_show' ,function(event){
+  $(document.body).on('click', '.edit_light_show' , function(event) {
     event.preventDefault();
     editLightSequence(this);
   });
+
+  $('#play-light-show').click(function(event) {
+    event.preventDefault();
+    playLightShow();
+  });
 });
+
+function playLightShow() {
+  debugger;
+};
+
+function prepareLightSequence(light_sequence) {
+  var light_effect_id = light_sequence["light_effect_id"];
+  var light_id = light_sequence["light_id"];
+  var power = light_sequence["on"] === 1 ? true : false;
+  var data;
+  if (powerChanged(light_id, power)) {
+    data = dataConstructor(
+      light_effect_setting[light_effect_id]["hue"],
+      light_effect_setting[light_effect_id]["brightness"],
+      light_effect_setting[light_effect_id]["saturation"],
+      light_sequence["transition_time"],
+      power
+    )
+  } else {
+    data = dataConstructor(
+      light_effect_setting[light_effect_id]["hue"],
+      light_effect_setting[light_effect_id]["brightness"],
+      light_effect_setting[light_effect_id]["saturation"],
+      light_sequence["transition_time"]
+    )
+  }
+  var hash = {};
+  hash["scheduled_time"] = light_sequence["scheduled_time"];
+  hash["light_id"] = light_sequence["light_id"];
+  hash["data"] = data;
+  return hash;
+};
+
+function powerChanged(id, power_status) {
+  if (light_power_status[id] === power_status) {
+    return false;
+  } else {
+    light_power_status[id] = power_status;
+    return true;
+  }
+};
+
+function resetLightSequences() {
+  light_sequences = [];
+  light_power_status = {
+    1: false,
+    2: false,
+    3: false
+  };
+};
 
 function editLightSequence(a_element) {
   var href_array = a_element.href.split("/");
@@ -170,8 +232,11 @@ function updateLightSequences(light_show_id){
   $.getJSON("/light_shows/" + light_show_id + "/light_sequences")
     .done(function(data, textStatus, jqXHR) {
       var light_sequences_html = "";
+      resetLightSequences();
       for (var i = 0; i < data.length; i++) {
-        light_sequences_html += buildTableRow(data[i]);
+        var light_sequence = data[i];
+        light_sequences.push(prepareLightSequence(light_sequence));
+        light_sequences_html += buildTableRow(light_sequence);
       }
       $('tr.light_sequence_row').remove();
       $('tbody').append(light_sequences_html);

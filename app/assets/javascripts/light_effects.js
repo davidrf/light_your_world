@@ -111,6 +111,7 @@ function get_light_effect_list() {
         var light_effect_id = data[i].id;
         light_effect_hash[light_effect_id] = light_effect_name;
         light_effect_list.push(light_effect_name);
+        light_effect_setting[light_effect_id] = data[i];
       }
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
