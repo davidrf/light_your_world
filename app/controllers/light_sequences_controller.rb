@@ -1,7 +1,7 @@
 class LightSequencesController < ApplicationController
   def index
     light_show = LightShow.find(params[:light_show_id])
-    @light_sequences = light_show.light_sequences.order(:scheduled_time)
+    @light_sequences = light_show.light_sequences.order(:scheduled_time, :light_id)
     respond_to do |format|
       format.json { render json: @light_sequences }
     end

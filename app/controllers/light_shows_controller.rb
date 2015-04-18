@@ -12,7 +12,7 @@ class LightShowsController < ApplicationController
       @lights_dropdown = [1, 2, 3].map do |light_effect|
         [light_effect, light_effect]
       end
-      @light_sequences = light_shows.first.light_sequences.order(:scheduled_time)
+      @light_sequences = light_shows.first.light_sequences.order(:scheduled_time, :light_id)
       @light_show_first = light_shows.first
       @light_sequence = LightSequence.new
     end

@@ -46,8 +46,20 @@ $(function() {
   });
 });
 
-function playLightShow() {
-  debugger;
+function playLightShow(light) {
+  for (var i = 0; i < light_sequences.length; i++) {
+    playLightSequence(light_sequences[i]);
+  }
+};
+
+function playLightSequence(light_sequence) {
+  setTimeout(function() {
+    $.ajax({
+      method:"PUT",
+      url: light_sequence["url"],
+      data: light_sequence["data"]
+    });
+  }, light_sequence["scheduled_time"])
 };
 
 function prepareLightSequence(light_sequence) {
@@ -73,7 +85,7 @@ function prepareLightSequence(light_sequence) {
   }
   var hash = {};
   hash["scheduled_time"] = light_sequence["scheduled_time"];
-  hash["light_id"] = light_sequence["light_id"];
+  hash["url"] = urlConstructor(light_sequence["light_id"]);
   hash["data"] = data;
   return hash;
 };
